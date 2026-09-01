@@ -10,7 +10,7 @@ beforeAll(async () => {
 describe("POST /api/v1/users", () => {
   describe("Anonymous user", () => {
     test("With unique and valid data", async () => {
-      const response1 = await fetch("http://localhost:3000/api/v1/users", {
+      const response = await fetch("http://localhost:3000/api/v1/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,9 +22,9 @@ describe("POST /api/v1/users", () => {
         }),
       });
 
-      expect(response1.status).toBe(201);
+      expect(response.status).toBe(201);
 
-      const responseBody = await response1.json();
+      const responseBody = await response.json();
 
       expect(responseBody).toEqual({
         id: responseBody.id,
