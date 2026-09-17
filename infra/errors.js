@@ -16,25 +16,6 @@ export class InternalServerError extends Error {
   }
 }
 
-export class MethodNotAllowedError extends Error {
-  constructor() {
-    super("Método não permitido para este endpoint.");
-    this.name = "MethodNotAllowedError";
-    this.action =
-      "Verifique se o método HTTP enviado é válido para este endpoint";
-    this.statusCode = 405;
-  }
-
-  toJSON() {
-    return {
-      name: this.name,
-      message: this.message,
-      action: this.action,
-      status_code: this.statusCode,
-    };
-  }
-}
-
 export class ServiceError extends Error {
   constructor({ cause, message }) {
     super(message || "Serviço indisponível no momento.", { cause });
@@ -79,6 +60,44 @@ export class NotFoundError extends Error {
     this.action =
       action || "Verifique se os parâmetros enviados na consulta estão certos.";
     this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
+export class UnauthorizedError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Usuário não autenticado", {
+      cause,
+    });
+    this.name = "UnauthorizedError";
+    this.action = action || "Faça novamente o login para continuar.";
+    this.statusCode = 401;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+export class MethodNotAllowedError extends Error {
+  constructor() {
+    super("Método não permitido para este endpoint.");
+    this.name = "MethodNotAllowedError";
+    this.action =
+      "Verifique se o método HTTP enviado é válido para este endpoint";
+    this.statusCode = 405;
   }
 
   toJSON() {
